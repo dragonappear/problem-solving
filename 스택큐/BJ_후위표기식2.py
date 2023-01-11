@@ -11,7 +11,7 @@ input = sys.stdin.readline
 6. 엣지케이스
 '''
 
-# space: O(m), m is length of expression
+# time: O(m), m is length of expression
 # space: O(m), m is length of expression
 if __name__=="__main__":
     
