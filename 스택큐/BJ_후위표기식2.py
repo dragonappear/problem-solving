@@ -11,8 +11,8 @@ input = sys.stdin.readline
 6. 엣지케이스
 '''
 
-# time: O(m), m is length of expression
-# space: O(m), m is length of expression
+# time: O(n), n is the number of letters
+# space: O(n), n is length of letters
 if __name__=="__main__":
     
     n = int(input()) # n
