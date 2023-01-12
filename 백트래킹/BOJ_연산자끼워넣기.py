@@ -16,6 +16,8 @@ input = sys.stdin.readline
 
 
 # 재귀
+# time : O(n!) (n is the length of sequence)
+# space : O(n) (n is the length of sequence)
 def recursive(level:int,total:int)->None:
     global mx,mn
 
