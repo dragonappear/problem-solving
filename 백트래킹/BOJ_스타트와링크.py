@@ -6,17 +6,19 @@ input = sys.stdin.readline
 
 # dfs
 # team_a를 생성하면 team_b는 자동으로 결정된다
+# team_a를 dfs로 구한뒤 계산 후 최솟값 업데이트
+# time: O((n)C(n//2)) n is the number of player [4,20]
+# space: O(n^2)
 mn = float('inf')
 def solution_1():
     def dfs(index:int,team_a:List)->None:
         global mn
 
         # 종료점
-        if len(team_a) == players_count // 2 :
-            trace.append(team_a)
-            team_b = [player for player in players if player not in team_a]
+        if len(team_a) == players_count // 2 : # O(n^2)
+            team_b = [player for player in players if player not in team_a] # O(n)
             a_sum = b_sum = 0
-            for player_x in range(players_count//2-1):
+            for player_x in range(players_count//2-1): # O(n^2)
                 for player_y in range(player_x+1,players_count//2):
                     a_sum += ability[team_a[player_x]][team_a[player_y]] + ability[team_a[player_y]][team_a[player_x]]
                     b_sum += ability[team_b[player_x]][team_b[player_y]] + ability[team_b[player_y]][team_b[player_x]]
@@ -26,15 +28,10 @@ def solution_1():
         
         # DFS
         for member in range(index,len(players)):
-            if (not visited[member] and 
-                    (len(team_a) < players_count // 2) and 
-                    (len(trace) <= OPERATOR_COUNT)):
-
-                visited[member] = True
+            if (len(team_a) < players_count // 2):
                 team_a.append(member)
                 dfs(member+1,team_a)
                 team_a.pop()
-                visited[member] = False
 
     def combinations(n:int,r:int)->int:
         a = 1
@@ -49,9 +46,6 @@ def solution_1():
     ability = [ list(map(int,input().split())) for _ in range(n)]
     players = [i for i in range(n)]
     players_count = len(players)
-    visited = [False] * players_count
-    trace = []
-    OPERATOR_COUNT = combinations(players_count,players_count//2)
     dfs(0,[])
     print(mn)
 
@@ -93,5 +87,4 @@ def solution_2():
     # 출력
     print(mn)
 
-#solution_2()
 
