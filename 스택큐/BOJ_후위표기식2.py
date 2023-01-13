@@ -25,7 +25,7 @@ if __name__=="__main__":
 
     
     stack = []
-    for char in expression: # O(m)
+    for char in expression: # O(n)
         if char.isalpha(): # 문자면 stack에 삽입
             stack.append(char_map[char]) 
         else: # 연산자면 연산처리 후 stack에 삽입
