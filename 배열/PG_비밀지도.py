@@ -1,14 +1,16 @@
-# arr1,arr2 zip으로 묶은 후
-# 각각의 원소에 대해 | 연산하면 이진수 결과가 나옴
-# 이진수 결과를 # 공백으로 변환 후 리턴변수에 추가
-# time: O(n^2) n=[1,16]
-# space: O(n) n=[1,16]
+"""
+arr1,arr2 zip으로 묶은 후
+각각의 원소에 대해 | 연산하면 이진수 결과가 나옴
+이진수 결과를 # 공백으로 변환 후 리턴변수에 추가
+time: O(n^2) n=[1,16]
+space: O(n) n=[1,16]
+"""
 def solution(n, arr1, arr2):
     answer = []
     char_map = {"1":"#","0":" "}
-    for a,b in list(zip(arr1,arr2)):
+    for a,b in list(zip(arr1,arr2)): # O(n)
         bi = bin(a|b)[2:].rjust(n,'0')
-        answer.append(''.join([ char_map[c] for c in bi]))
+        answer.append(''.join([ char_map[c] for c in bi])) # O(n)
     return answer
 
 n = 6
