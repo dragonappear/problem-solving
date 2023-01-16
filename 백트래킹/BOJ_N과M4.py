@@ -21,7 +21,6 @@ print() -> write()로 전환 시 2100ms -> 1264ms 시간을 절약함
 """
 
 def dfs(discovered:List)->None:
-
     if len(discovered)==m:
         write(str(' '.join(map(str,discovered)))+"\n")
         return

@@ -18,7 +18,7 @@ time: O(n!) n=[1,8]
 space: O(n)
 """
 def dfs(discovered:List):
-
+    
     if len(discovered)==m:
         write(str(' '.join(map(str,discovered)))+"\n")
         return
