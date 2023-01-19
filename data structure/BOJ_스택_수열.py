@@ -24,7 +24,7 @@ for _ in range(int(input())):
     else: # 스택에 들어간 경우
         if not stack or (stack and stack[-1]<n): # 이미 POP된 경우
             flag = False
-            continue
+            break
         elif stack and stack[-1]>=n: # POP되지 않은 경우
             while stack[-1]!=n:
                 stack.pop()
