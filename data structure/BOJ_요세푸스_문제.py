@@ -1,5 +1,5 @@
+# https://www.acmicpc.net/problem/1158
 from sys import stdin,stdout
-from collections import deque
 input,write=stdin.readline,stdout.write
 
 """
@@ -10,17 +10,14 @@ time: O(n^2) n=[1,5_000]
 space: O(n) n=[1,5_000]
 """
 
-n,k=map(int,input().split())
-arr = [i for i in range(1,n+1)]
+N,K=map(int,input().split())
+arr = [i for i in range(1,N+1)]
+result = [] # 제거된 사람들을 저장하는 배열
+index=0 # 제거될 사람의 인덱스 번호
+while arr:
+    index = (index+K-1)%len(arr) 
+    result.append(arr.pop(index))
 
-answer = [] # 제거된 사람들을 저장하는 배열
-index = 0 # 제거될 사람의 인덱스 번호
-
-for _ in range(n):
-    index += k-1
-    if index >= len(arr):
-        index = index%len(arr)
-    
-    answer.append(str(arr.pop(index)))
-
-print("<",", ".join(answer),">",sep='')
+write("<")
+write(", ".join(map(str,result)))
+write(">")
