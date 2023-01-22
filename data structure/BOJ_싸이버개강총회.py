@@ -10,7 +10,6 @@ while True:
     if s=='': break
     
     time,nickname = s.split()
-        
     if time<=S:
         memberset.add(nickname)
     elif E<=time<=Q:
