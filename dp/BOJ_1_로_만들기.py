@@ -17,4 +17,3 @@ for i in range(4,N+1):
     dp[i]=min(cd)+1
 
 print(dp[N])
-        
