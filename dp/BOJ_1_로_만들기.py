@@ -2,6 +2,8 @@
 from sys import stdin,stdout
 input,write=stdin.readline,stdout.write
 
+# 1.테이블정의
+# dp[i]=i를 1로 만들기 위해 필요한 연산 사용 횟수의 최솟값
 dp=[0] * (10**6+1)
 dp[1],dp[2],dp[3]=0,1,1
 
