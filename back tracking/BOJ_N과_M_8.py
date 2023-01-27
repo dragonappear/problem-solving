@@ -20,6 +20,7 @@ A.sort() # 오름차순 출력
 dfs(0,[])
 
 # 풀이2
+# 시간 초과
 for p in product(A,repeat=M):
     if sorted(p)==list(p):
         print(*p)
