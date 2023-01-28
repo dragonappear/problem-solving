@@ -3,36 +3,29 @@ from sys import stdin,stdout
 from collections import deque
 input,write=stdin.readline,stdout.write
 
-def teleport(num:int):
-    tmp=num
+def teleport(i):
+    tmp=i
     if not tmp: return
-    while tmp<=LIMIT and not dist[K]:
-        if not dist[tmp]:
-            dist[tmp]=dist[num]
+    while tmp<MX and dist[K]==0:
+        if dist[tmp]==0:
+            dist[tmp]=dist[i]
             q.append(tmp)
             if tmp==K: return
-        tmp <<= 1
-
+        tmp<<=1
+        
+MX=100_010
 N,K=map(int,input().split())
-if N==K:
-    print(0)
-    exit()
-    
-LIMIT=100_001
-dist=[ 0 for _ in range(LIMIT+2)]
-q=deque([N])
+dist=[0]*MX
 dist[N]=1
+
+q=deque([N])
 teleport(N)
 
-while not dist[K]:
-    u=q.popleft()    
+while q:
+    u=q.popleft()
     for n in [u-1,u+1]:
-        if not(0<=n<LIMIT) or dist[n]: continue
+        if not(0<=n<MX) or dist[n]: continue
         dist[n]=dist[u]+1
         q.append(n)
         teleport(n)
-
 print(dist[K]-1)
-
-
-# teleport 함수를 이용해 현재 보고 있는 u / n의 2의 거듭제곱을 한 번에 처리하는 방식으로 풀이한 코드

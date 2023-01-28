@@ -3,11 +3,11 @@ from sys import stdin,stdout
 input,write=stdin.readline,stdout.write
 
 N=int(input())
-dp= [0]*(1_001)
-dp[1]=1
-dp[2]=2
-dp[3]=3
-for i in range(4,N+1):
-    dp[i] = (dp[i-1] + dp[i-2]) % 10_007
+MOD=10_007
+d=[0]*(1_010)
+d[1],d[2]=1,2
 
-print(dp[N])
+for i in range(3,N+1):
+    d[i]= (d[i-1]+d[i-2])%MOD
+
+print(d[N])
