@@ -2,46 +2,50 @@
 from sys import stdin,stdout
 from collections import deque
 input,write=stdin.readline,stdout.write
-  
+
+def OOB(r,c): return True if not(0<=r<R) or not(0<=c<C) else False
+
 R,C=map(int,input().split())
 graph=[list(input().strip()) for _ in range(R)]
 dr_dc=[(0,1),(0,-1),(1,0),(-1,0)]
-dist1 = [[-1] * C for _ in range(R)]
-dist2 = [[-1] * C for _ in range(R)]
+dist_f,dist_j=[[-1]*C for _ in range(R)],[[-1]*C for _ in range(R)]
 q1,q2=deque(),deque()
 
-for i in range(R):
-    for j in range(C):
-        if graph[i][j]=='F':
-            dist1[i][j]=0
-            q1.append((i,j))
-        elif graph[i][j]=='J':
-            dist2[i][j]=0
-            q2.append((i,j))
-
+# 시작 큐 저장
+for r in range(R):
+    for c in range(C):
+        if graph[r][c]=='F':
+            q1.append((r,c))
+            dist_f[r][c]=0
+        elif graph[r][c]=='J':
+            q2.append((r,c))
+            dist_j[r][c]=0
+            
+        if graph[r][c]=='#':
+            dist_f[r][c]=dist_j[r][c]=0
+                    
 # 불 BFS
 while q1:
     r,c=q1.popleft()
     for dr,dc in dr_dc:
         nr,nc=r+dr,c+dc
-        if not(0<=nr<R) or not(0<=nc<C): continue
-        if dist1[nr][nc]>=0 or graph[nr][nc]=="#": continue
-        dist1[nr][nc]=dist1[r][c]+1
+        if OOB(nr,nc) or dist_f[nr][nc]>=0: continue # 이미 방문한 경우(벽 처리 포함)
+        dist_f[nr][nc]=dist_f[r][c]+1
         q1.append((nr,nc))
 
-# J BFS
+# 지훈 BFS
 while q2:
     r,c=q2.popleft()
     for dr,dc in dr_dc:
         nr,nc=r+dr,c+dc
-        
-        if not(0<=nr<R) or not(0<=nc<C):
-            write(str(dist2[r][c]+1)+"\n")
+    
+        if OOB(nr,nc): # 탈출 성공한 경우
+            write(str(dist_j[r][c]+1)+"\n")
             exit()
-        
-        if dist2[nr][nc]>=0 or graph[nr][nc]=="#": continue
-        if dist1[nr][nc]!=-1 and dist1[nr][nc]<=dist2[r][c]+1 : continue
-        dist2[nr][nc]=dist2[r][c]+1
+    
+        if dist_j[nr][nc]>=0: continue # 이미 방문한 경우(벽 처리 포함)
+        if dist_f[nr][nc]>=0 and dist_f[nr][nc]<=dist_j[r][c]+1: continue # 불이 먼저 도착해서 도착할 수 없는 경우
+        dist_j[nr][nc]=dist_j[r][c]+1
         q2.append((nr,nc))
 
 write("IMPOSSIBLE\n")
