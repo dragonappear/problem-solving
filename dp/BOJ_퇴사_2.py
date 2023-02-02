@@ -1,4 +1,4 @@
-# https://www.acmicpc.net/problem/14501
+# https://www.acmicpc.net/problem/15486
 from sys import stdin,stdout
 input,write=stdin.readline,stdout.write
 
@@ -10,11 +10,10 @@ d=[0]*(1_500_002)
 for i in range(1,N+1):
     T[i],P[i]=map(int,input().split())
 
-for i in range(N,-1,-1):
+for i in range(N,0,-1):
     if i+T[i]<=N+1:
         d[i]=max(d[i+1],d[i+T[i]]+P[i])
     else:
         d[i]=d[i+1]
 
-print(d[0])
-        
+print(d[1])
