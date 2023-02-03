@@ -4,19 +4,14 @@ input,write=stdin.readline,stdout.write
 
 N,M=map(int,input().split())
 A=list(map(int,input().strip().split()))
-lt=rt=cnt=sum=0
-
-while True:
-    if sum>=M: 
-        sum-=A[lt]
-        lt+=1
-    elif rt==N: 
-        break
-    else: 
-        sum+=A[rt]
+rt=cnt=0
+tot=A[0]
+for lt in range(N):
+    while rt<N and tot<M:
         rt+=1
-        
-    if sum==M:
-        cnt+=1
+        if rt<N: tot+=A[rt]
+    if rt==N: break
+    if tot==M: cnt+=1
+    tot-=A[lt]
     
 print(cnt)

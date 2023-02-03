@@ -5,19 +5,12 @@ input,write=stdin.readline,stdout.write
 N,M=map(int,input().split())
 A=[int(input()) for _ in range(N)]
 A.sort()
-lt,rt=0,0
-
+rt=0
 mn=float('inf')
-while lt<N and rt<N and lt<=rt:
-    diff=A[rt]-A[lt]
-    
-    if diff==M:
-        print(M)
-        exit()
-    elif diff>M:
-        mn=min(mn,diff)
-        lt+=1
-    elif diff<M:
+for lt in range(N):
+    while rt<N and A[rt]-A[lt]<M:
         rt+=1
-        
+    if rt==N: break
+    mn=min(mn,A[rt]-A[lt])
+ 
 print(mn)
