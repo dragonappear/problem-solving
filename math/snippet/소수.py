@@ -9,15 +9,16 @@ def isprime(n):
     return True
 
 # 에르토스테네스의 체 (O(nlglgn))
+N=int(input())
 prime = [True] * 1_000_001
 prime[1] = False
 i=2
-while i*i<=n:
+while i*i<=N:
     if prime[i]==False: 
         i+=1
         continue
     j = i*i
-    while j<=n:
+    while j<=N:
         prime[j]=False
         j+=i
     i+=1
