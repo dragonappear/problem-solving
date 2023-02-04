@@ -34,6 +34,7 @@ if len_n%2==1:
     ans+=neg[-1]
 
 print(ans)
+
 """
 규칙
 

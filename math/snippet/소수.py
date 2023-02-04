@@ -13,7 +13,9 @@ prime = [True] * 1_000_001
 prime[1] = False
 i=2
 while i*i<=n:
-    if prime[i]==False: continue
+    if prime[i]==False: 
+        i+=1
+        continue
     j = i*i
     while j<=n:
         prime[j]=False
