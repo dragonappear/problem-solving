@@ -1,7 +1,5 @@
 # https://www.acmicpc.net/problem/2138
-# https://colin-sh.tistory.com/47
 from sys import stdin, stdout, setrecursionlimit
-from copy import deepcopy
 input, write = stdin.readline, stdout.write
 setrecursionlimit(10**9)
 
