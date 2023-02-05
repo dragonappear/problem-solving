@@ -1,30 +1,30 @@
 # https://www.acmicpc.net/problem/2457
-from sys import stdin,stdout
-input,write=stdin.readline,stdout.write
+from sys import stdin, stdout
+input, write = stdin.readline, stdout.write
 
-N=int(input())
+N = int(input())
 flowers = []
 for i in range(N):
-    sm,sd,em,ed=map(int,input().strip().split())
-    flowers.append((sm*100+sd,em*100+ed))
+    sm, sd, em, ed = map(int, input().strip().split())
+    flowers.append((sm*100+sd, em*100+ed))
 
 flowers.sort()
 
-start=301 # 현재시간
-cnt=0 # 선택한 꽃의 개수
-while start<1201:
-    end=start # 이번에 추가할 꽃으로 인해 변경된 시간
-    
+start = 301  # 현재시간
+cnt = 0  # 선택한 꽃의 개수
+while start < 1201:
+    end = start  # 이번에 추가할 꽃으로 인해 변경된 시간
+
     for i in range(N):
-        if (flowers[i][0]<=start) and (flowers[i][1]>end):
-            end=flowers[i][1]
-        
-    if end==start: # 시간 start에서 더 전진이 불가능
+        if (flowers[i][0] <= start) and (flowers[i][1] > end):
+            end = flowers[i][1]
+
+    if end == start:  # 시간 start에서 더 전진이 불가능
         print(0)
-        exit()    
-    cnt+=1
-    start=end
-    
+        exit()
+    cnt += 1
+    start = end
+
 print(cnt)
 
 """
