@@ -1,24 +1,58 @@
 # https://www.acmicpc.net/problem/2606
-from sys import stdin,stdout
-from collections import defaultdict
-input,write=stdin.readline,stdout.write
+from sys import stdin, stdout
+from collections import defaultdict, deque
+input, write = stdin.readline, stdout.write
 
-def dfs(u:int):
-    global count
-    visit[u],count=True,count+1
+"""
+BFS
+"""
+
+
+def bfs():
+    visit = [False] * (N+1)
+    q = deque([1])
+    visit[1] = True
+    cnt = 0
+    while q:
+        u = q.popleft()
+        for v in graph[u]:
+            if visit[v]:
+                continue
+            visit[v] = True
+            cnt += 1
+            q.append(v)
+    return cnt
+
+
+"""
+DFS
+"""
+
+
+def dfs(u):
+    global cnt
+
     for v in graph[u]:
-        if visit[v]: continue
+        if visit[v]:
+            continue
+        visit[v] = True
+        cnt += 1
         dfs(v)
 
-V=int(input())
-E=int(input())
-graph=defaultdict(list)
-visit = [False] * (V+1)
-count=0
-for _ in range(E):
-    u,v=map(int,input().split())  
+
+N = int(input())
+M = int(input())
+graph = defaultdict(list)
+
+for _ in range(M):
+    u, v = map(int, input().split())
     graph[u].append(v)
     graph[v].append(u)
 
+print(bfs())
+
+cnt = 0
+visit = [False] * (N+1)
+visit[1] = True
 dfs(1)
-write(str(count-1))
+print(cnt)

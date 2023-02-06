@@ -2,10 +2,8 @@
 from sys import stdin, stdout
 input, write = stdin.readline, stdout.write
 
-# 회전하는 함수
 
-
-def rotate(A, B):
+def rotate(A, B):  # 회전하는 함수
     tmp = [[0]*12 for _ in range(12)]
     #  복사
     for i in range(A):
@@ -18,10 +16,8 @@ def rotate(A, B):
 
     return B, A
 
-# 붙일수있는지 체크, 붙일수있으면 붙이고 리턴
 
-
-def possible(x, y):
+def possible(x, y):  # 붙일수있는지 체크, 붙일수있으면 붙이고 리턴
     for i in range(A):
         for j in range(B):
             if board[x+i][y+j] == 1 and paper[i][j] == 1:
