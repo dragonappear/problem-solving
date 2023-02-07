@@ -1,4 +1,4 @@
-# https://www.acmicpc.net/problem/2606
+# https://www.acmicpc.net/problem/2206
 from sys import stdin, stdout
 from collections import deque
 input, write = stdin.readline, stdout.write
