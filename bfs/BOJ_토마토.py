@@ -1,35 +1,43 @@
 # https://www.acmicpc.net/problem/7576
-from sys import stdin,stdout
+from sys import stdin, stdout
 from collections import deque
-input,write=stdin.readline,stdout.write
+input, write = stdin.readline, stdout.write
 
-M,N=map(int,input().split())
-graph=[list(map(int,input().split())) for _ in range(N)]
-dr_dc=[(0,1),(0,-1),(1,0),(-1,0)]
-dist=[[0] * M for _ in range(N)]
-q=deque()
 
-for i in range(N):
-    for j in range(M):
-        if graph[i][j]==0:
-            dist[i][j]=-1
-        elif graph[i][j]==1:
-            q.append((i,j))
+def bfs():
+    q = deque()
+    dist = [[-1]*M for _ in range(N)]
 
-while q:
-    r,c=q.popleft()
-    for dr,dc in dr_dc:
-        nr,nc=r+dr,c+dc
-        if not(0<=nr<N) or not(0<=nc<M) or dist[nr][nc]>=0: continue
-        dist[nr][nc]=dist[r][c]+1
-        q.append((nr,nc))
+    for i in range(N):
+        for j in range(M):
+            if board[i][j] == -1:
+                dist[i][j] = 0
+            elif board[i][j] == 1:
+                dist[i][j] = 0
+                q.append((i, j))
 
-mx = float('-inf')
-for i in range(N):
-    for j in range(M):
-        if dist[i][j]==-1:
-            write("-1\n")
-            exit()
-        mx = max(mx,dist[i][j])
+    while q:
+        r, c = q.popleft()
+        for dr, dc in dr_dc:
+            nr, nc = r+dr, c+dc
+            if not(0 <= nr < N) or not(0 <= nc < M) or dist[nr][nc] >= 0 or board[nr][nc] == -1:
+                continue
+            dist[nr][nc] = dist[r][c]+1
+            q.append((nr, nc))
 
-write(str(mx)+"\n")
+    ans = 0
+    for i in range(N):
+        for j in range(M):
+            if dist[i][j] == -1:
+                return -1
+            elif dist[i][j] > 0:
+                ans = max(ans, dist[i][j])
+
+    return ans
+
+
+M, N = map(int, input().split())
+board = [list(map(int, input().split()))
+         for _ in range(N)]  # 0: 익X토 , 1: 익O토, -1: 빈 칸
+dr_dc = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+print(bfs())
