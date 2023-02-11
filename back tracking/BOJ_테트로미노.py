@@ -3,44 +3,34 @@ from sys import stdin, stdout
 input, write = stdin.readline, stdout.write
 
 
-def solve(r, c, cnt, sum):
+def dfs(r, c, cnt, tot):
     global mx
     if cnt == 4:
-        mx = max(mx, sum)
+        mx = max(tot, mx)
         return
 
     for dr, dc in dr_dc:
         nr, nc = r+dr, c+dc
-        if not(0 <= nr < N) or not(0 <= nc < M) or visit[nr][nc]:
+        if not(0 <= nr < N) or not(0 <= nc < M) or vis[nr][nc]:
             continue
 
-        sum += board[nr][nc]
-        visit[nr][nc] = True
-        solve(nr, nc, cnt+1, sum)
+        vis[nr][nc] = True
+        dfs(nr, nc, cnt+1, tot+board[nr][nc])
         if cnt == 2:
-            solve(r, c, cnt+1, sum)
-        sum -= board[nr][nc]
-        visit[nr][nc] = False
+            dfs(r, c, cnt+1, tot+board[nr][nc])
+        vis[nr][nc] = False
 
 
 N, M = map(int, input().split())
-board = [list(map(int, input().strip().split())) for _ in range(N)]
-visit = [[False]*M for _ in range(N)]
+board = [list(map(int, input().split())) for _ in range(N)]
+vis = [[False]*M for _ in range(N)]
 dr_dc = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-mx = 0
+mx = float('-inf')
 
 for i in range(N):
     for j in range(M):
-        sum = board[i][j]
-        visit[i][j] = True
-        solve(i, j, 1, sum)
-        visit[i][j] = False
-print(mx)
+        vis[i][j] = True
+        dfs(i, j, 1, board[i][j])
+        vis[i][j] = False
 
-"""
-ㅗㅜㅓㅏ를 제외한 모든 테트로미노는
-길이가 4인 루트를 찾는 백트래킹으로 얻을 수 있다.
-ㅗㅜㅓㅏ는 cnt == 2에서 3번째 정사각형을 뽑은 뒤
-현위치인 (cx, cy)를 인자로 다시 보내 찾을 수 있다.
-해당 코드는 34-35번째 줄과 같이 구현된다.
-"""
+print(mx)

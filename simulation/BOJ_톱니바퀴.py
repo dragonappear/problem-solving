@@ -3,42 +3,48 @@ from sys import stdin, stdout
 input, write = stdin.readline, stdout.write
 
 
-def solve(n, d):
-    # 회전 변수
-    dirs = [0]*4
-    dirs[n] = d
-
-    # 왼쪽으로 회전을 전파
-    idx = n
-    while idx > 0 and wheel[idx][6] != wheel[idx-1][2]:
-        dirs[idx-1] = -dirs[idx]
-        idx -= 1
-
-    # 오른쪽으로 회전 전파
-    idx = n
-    while idx < 3 and wheel[idx][2] != wheel[idx+1][6]:
-        dirs[idx+1] = -dirs[idx]
-        idx += 1
-
+def get_scrore():
+    ans = 0
     for i in range(4):
-        if dirs[i] == -1:
-            x = wheel[i].pop(0)
-            wheel[i].append(x)
-
-        elif dirs[i] == 1:
-            x = wheel[i].pop()
-            wheel[i].insert(0, x)
+        if wheels[i][0]:
+            ans += (1 << i)
+    return ans
 
 
-wheel = [list(map(int, input().strip())) for _ in range(4)]
+def rotate(n, d):
+    wheel = wheels[n]
+    if d == 1:
+        x = wheel.pop()
+        wheel.insert(0, x)
+    else:
+        x = wheel.pop(0)
+        wheel.append(x)
 
+
+def solve(n, d):
+    rot = [(n, d)]
+
+    dd = d
+    for i in range(n, 0, -1):
+        if wheels[i][6] == wheels[i-1][2]:
+            break
+        rot.append((i-1, -dd))
+        dd *= -1
+
+    dd = d
+    for i in range(n, 3):
+        if wheels[i][2] == wheels[i+1][6]:
+            break
+        rot.append((i+1, -dd))
+        dd *= -1
+
+    for nn, dd in rot:
+        rotate(nn, dd)
+
+
+wheels = [list(map(int, input().strip())) for _ in range(4)]
 for _ in range(int(input())):
-    n, d = map(int, input().split())
-    solve(n-1, d)
+    N, D = map(int, input().strip().split())
+    solve(N-1, D)
 
-score = 0
-for i in range(4):
-    if wheel[i][0] == 1:
-        score += (1 << i)
-
-print(score)
+print(get_scrore())
