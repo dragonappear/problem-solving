@@ -1,45 +1,43 @@
 # https://www.acmicpc.net/problem/14502
 from sys import stdin, stdout
-from itertools import combinations
 from collections import deque
+from itertools import combinations
 input, write = stdin.readline, stdout.write
-
-"""
-완전탐색
-
-(64)C(3) * 64 = 41664 * 64 = 2_666_496 통과
-
-"""
 
 
 def bfs():
     global mx
-    virus = [(i, j) for i in range(N) for j in range(M) if board[i][j] == 2]
-    dist = [elem[::] for elem in board]
+    vis = [[False]*M for _ in range(N)]
+    for r, c in virus:
+        vis[r][c] = True
     q = deque(virus)
     while q:
         r, c = q.popleft()
         for dr, dc in dr_dc:
             nr, nc = r+dr, c+dc
-            # 인덱스 밖 or 벽이거나 방문했는 경우 pass
-            if not(0 <= nr < N) or not(0 <= nc < M) or dist[nr][nc] >= 1:
+            if not(0 <= nr < N) or not(0 <= nc < M) or vis[nr][nc] or board[nr][nc] == 1:
                 continue
+            vis[nr][nc] = True
             q.append((nr, nc))
-            dist[nr][nc] = 2
 
-    mx = max(mx, int(sum(1 for i in range(N)
-             for j in range(M) if dist[i][j] == 0)))
+    cnt = int(sum(1 for i in range(N)
+              for j in range(M) if not vis[i][j] and board[i][j] != 1))
+    mx = max(cnt, mx)
+    return
 
 
-mx = float('-inf')
 N, M = map(int, input().split())
 board = [list(map(int, input().strip().split())) for _ in range(N)]
-dr_dc = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+virus = [(i, j) for i in range(N) for j in range(M) if board[i][j] == 2]
+dr_dc = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
-point = [(i, j) for i in range(N) for j in range(M) if board[i][j] == 0]
-for a, b, c in combinations(point, 3):
-    board[a[0]][a[1]] = board[b[0]][b[1]] = board[c[0]][c[1]] = 1
+mx = float('-inf')
+for combi in combinations([i for i in range(N*M) if board[i//M][i % M] == 0], 3):
+    carr = [(c//M, c % M) for c in combi]
+    for r, c in carr:
+        board[r][c] = 1
     bfs()
-    board[a[0]][a[1]] = board[b[0]][b[1]] = board[c[0]][c[1]] = 0
+    for r, c in carr:
+        board[r][c] = 0
 
 print(mx)
