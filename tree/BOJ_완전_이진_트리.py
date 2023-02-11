@@ -10,8 +10,8 @@ def visit(arr, depth):
 
     mid = len(arr)//2
     visit(arr[:mid], depth+1)
-    visit(arr[mid+1:], depth+1)
     level[depth].append(arr[mid])
+    visit(arr[mid+1:], depth+1)
 
 
 K = int(input())

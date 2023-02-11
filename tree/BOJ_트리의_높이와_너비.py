@@ -23,13 +23,11 @@ def visit(p, r):
 
 
 N = int(input())
-left = [-1]*(N+1)
-right = [-1]*(N+1)
-parent = [-1]*(N+1)
+left, right, parent = [-1]*(N+1), [-1]*(N+1), [-1]*(N+1)
 level = [[] for _ in range(N+1)]
-root = 0
 col = 0
 
+# 입력
 for i in range(N):
     c, l, r = map(int, input().split())
     left[c] = l
@@ -39,22 +37,21 @@ for i in range(N):
     if r != -1:
         parent[r] = c
 
-
+# 부모 노드
 for i in range(1, N+1):
     if parent[i] == -1:
         root = i
         break
+
 visit(root, 0)
 
 mx, idx = float('-inf'), 0
 for i, v in enumerate(level):
-    if v:
-        w = v[-1]-v[0]+1
-        if w > mx:
-            idx = i
-            mx = w
+    if not v:
+        continue
+    w = v[-1]-v[0]+1
+    if w > mx:
+        idx = i
+        mx = w
 
-if mx != float('-inf'):
-    print(idx+1, mx)
-else:
-    print(1, 1)
+print(idx+1, mx)
