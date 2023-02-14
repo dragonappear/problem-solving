@@ -1,4 +1,5 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/120882
+
 def solution(score):
     N = len(score)
     avg = [(s[0]+s[1])/2 for s in score]
