@@ -32,5 +32,3 @@ for i in range(1, M+1):
     union(x, y)
 
 print(idx)
-
-print(parent)
