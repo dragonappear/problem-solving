@@ -5,9 +5,9 @@ setrecursionlimit(int(1e9))
 
 
 def find(x):
-    while x != parent[x]:
-        x = parent[x]
-    return x
+    if parent[x] != x:
+        parent[x] = find(parent[x])
+    return parent[x]
 
 
 def union(x, y):
