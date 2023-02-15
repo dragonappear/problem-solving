@@ -6,6 +6,7 @@ def solution(polynomial: str):
             num += int(n)
         else:
             x += int(n.replace("x", "").strip()) if len(n) >= 2 else 1
+
     if x:
         x = str(x)+"x" if x != 1 else "x"
     else:
@@ -19,10 +20,3 @@ def solution(polynomial: str):
         return num
     elif x:
         return x
-
-
-print(solution("3x + 7 + x"))
-print(solution("x + x + x"))
-print(solution("x"))
-print(solution("2x + 7"))
-print(solution("1 + 1"))
