@@ -1,9 +1,8 @@
 # https://www.acmicpc.net/problem/16401
 from sys import stdin
-from bisect import bisect_left
 input = stdin.readline
 
-M, N = map(int, input().split())  # 조카,과자
+M, N = map(int, input().split())
 L = list(map(int, input().split()))
 L.sort()
 
