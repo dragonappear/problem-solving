@@ -1,21 +1,29 @@
-from heapq import heappop, heappush
+import heapq
 
 
-def prim(adj_list):
-    visited = set()
-    start_vertex = list(adj_list.keys())[0]
-    heap = [(0, start_vertex)]
-    mst = []
+class Graph:
+    def __init__(self, num_vertices):
+        self.num_vertices = num_vertices
+        self.adj_list = [[] for _ in range(num_vertices)]
 
-    while heap:
-        weight, current_vertex = heappop(heap)
+    def add_edge(self, u, v, weight):
+        self.adj_list[u].append((v, weight))
+        self.adj_list[v].append((u, weight))
 
-        if current_vertex not in visited:
-            visited.add(current_vertex)
-            mst.append((weight, current_vertex))
+    def prim(self, start_vertex):
+        visited = [False] * self.num_vertices
+        min_heap = [(0, start_vertex)]
+        total_weight = 0
 
-            for neighbor, edge_weight in adj_list[current_vertex]:
-                if neighbor not in visited:
-                    heappush(heap, (edge_weight, neighbor))
+        while min_heap:
+            weight, u = heapq.heappop(min_heap)
+            if visited[u]:
+                continue
+            visited[u] = True
+            total_weight += weight
 
-    return mst
+            for v, weight in self.adj_list[u]:
+                if not visited[v]:
+                    heapq.heappush(min_heap, (weight, v))
+
+        return total_weight
