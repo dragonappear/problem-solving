@@ -1,26 +1,30 @@
 # https://www.acmicpc.net/problem/7453
 from sys import stdin
-from bisect import bisect_left, bisect_right
 input = stdin.readline
 
 N = int(input())
 A, B, C, D = [0]*N, [0]*N, [0]*N, [0]*N
-
+cnt = 0
 for i in range(N):
     A[i], B[i], C[i], D[i] = map(int, input().split())
 
-CD = []
+AB = []
 for i in range(N):
     for j in range(N):
-        CD.append(C[i]+D[j])
+        AB.append(A[i]+B[j])
 
-CD.sort()
-s = set(CD)
-ans = 0
+CD = dict()
 for i in range(N):
     for j in range(N):
-        t = A[i]+B[j]
-        if -t in s:
-            ans += (bisect_right(CD, -t)-bisect_left(CD, -t))
+        s = C[i]+D[j]
+        if s in CD:
+            CD[s] += 1
+        else:
+            CD[s] = 1
 
-print(ans)
+
+for x in AB:
+    if -x in CD:
+        cnt += CD[-x]
+
+print(cnt)
