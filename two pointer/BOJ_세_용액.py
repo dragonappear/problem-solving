@@ -1,6 +1,5 @@
 # https://www.acmicpc.net/problem/2473
 from sys import stdin
-from bisect import bisect_left
 input = stdin.readline
 
 n = int(input())
