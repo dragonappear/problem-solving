@@ -4,8 +4,8 @@ input = stdin.readline
 INF = int(1e9)
 
 
-def bf(start):
-    dist[start] = 0
+def bf():
+    dist[1] = 0
 
     for i in range(N):
         for u, v, cost in edges:
@@ -30,4 +30,4 @@ for _ in range(int(input())):
         u, v, cost = map(int, input().split())
         edges.append((u, v, -cost))
 
-    print("YES" if bf(1) else "NO")
+    print("YES" if bf() else "NO")
