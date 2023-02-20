@@ -1,9 +1,9 @@
-# https://www.acmicpc.net/problem/1753
 from sys import stdin
 from heapq import heappush, heappop
 from collections import defaultdict
 input = stdin.readline
 
+# O(ElogE)
 V, E = map(int, input().split())
 START = int(input())
 graph = defaultdict(list)
@@ -26,6 +26,3 @@ while heap:
         if d+w < dist[v]:
             dist[v] = d+w
             heappush(heap, (d+w, v))
-
-for i in range(1, V+1):
-    print(dist[i] if dist[i] != float('inf') else "INF")
