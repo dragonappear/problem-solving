@@ -5,8 +5,6 @@ INF = int(1e9)
 
 
 def bf():
-    dist[1] = 0
-
     for i in range(N):
         for u, v, cost in edges:
             if dist[v] > dist[u] + cost:

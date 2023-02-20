@@ -1,7 +1,7 @@
 # https://www.acmicpc.net/problem/11657
 from sys import stdin
 input = stdin.readline
-INF = float('inf')
+INF = int(1e9)
 
 
 def bf():
@@ -23,9 +23,7 @@ for _ in range(M):
     u, v, cost = map(int, input().split())
     edges.append((u, v, cost))
 
-negative_cycle = bf()
-
-if negative_cycle:
+if bf():
     print(-1)
 else:
     for i in range(2, N+1):
