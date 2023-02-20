@@ -41,5 +41,4 @@ for i in range(1, V+1):
             path.append(st)
             st = nxt[st][j]
         path.append(j)
-        print(len(path), end=' ')
-        print(*path)
+        print(len(path), *path)

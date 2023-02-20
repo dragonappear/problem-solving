@@ -17,22 +17,22 @@ S, E = map(int, input().split())
 
 heap = [(0, S, S)]
 dist = defaultdict(int)
-parent = [i for i in range(N+1)]
+prev = [i for i in range(N+1)]
 
 while heap:
     d, u, p = heappop(heap)
     if u not in dist:
         dist[u] = d
-        parent[u] = p
+        prev[u] = p
         for v, w in graph[u]:
             heappush(heap, (d+w, v, u))
 
 print(dist[E])
 tmp, rst = E, []
-while parent[tmp] != tmp:
+while prev[tmp] != tmp:
     rst.append(tmp)
-    tmp = parent[tmp]
-rst.append(parent[tmp])
+    tmp = prev[tmp]
+rst.append(prev[tmp])
 
 print(len(rst))
 print(*reversed(rst))
