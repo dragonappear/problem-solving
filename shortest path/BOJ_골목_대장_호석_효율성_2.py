@@ -17,12 +17,13 @@ def dijkstra(limit):
             continue
 
         for v, w in graph[u]:
-            if w > limit or c+w > C:
+            t = c+w
+            if w > limit or t > C:
                 continue
 
-            if dist[v] > c + w:
-                dist[v] = c + w
-                heappush(heap, (c + w, v))
+            if dist[v] > t:
+                dist[v] = t
+                heappush(heap, (t, v))
 
     return dist[B] <= C
 
