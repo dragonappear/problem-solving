@@ -1,31 +1,38 @@
 # https://www.acmicpc.net/problem/13549
-from sys import stdin,stdout
+from sys import stdin
 from collections import deque
-input,write=stdin.readline,stdout.write
+input = stdin.readline
+INF = float('inf')
+LIMIT = 100_010
 
-def teleport(i):
-    tmp=i
-    if not tmp: return
-    while tmp<MX and dist[K]==0:
-        if dist[tmp]==0:
-            dist[tmp]=dist[i]
-            q.append(tmp)
-            if tmp==K: return
-        tmp<<=1
-        
-MX=100_010
-N,K=map(int,input().split())
-dist=[0]*MX
-dist[N]=1
 
-q=deque([N])
+def teleport(cur):
+    st = cur
+    if cur == 0:
+        return
+    while cur < LIMIT and dist[K] == 0:
+        if dist[cur] == 0:
+            dist[cur] = dist[st]
+            q.append(cur)
+            if cur == K:
+                return
+        cur <<= 1
+
+
+N, K = map(int, input().split())
+dist = [0]*(LIMIT)
+
+dist[N] = 1
+q = deque([N])
 teleport(N)
 
 while q:
-    u=q.popleft()
-    for n in [u-1,u+1]:
-        if not(0<=n<MX) or dist[n]: continue
-        dist[n]=dist[u]+1
+    x = q.popleft()
+    for n in [x-1, x+1]:
+        if not(0 <= n < LIMIT) or dist[n]:
+            continue
+        dist[n] = dist[x]+1
         q.append(n)
         teleport(n)
+
 print(dist[K]-1)
