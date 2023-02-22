@@ -6,7 +6,7 @@ input = stdin.readline
 INF = float('inf')
 
 
-def solve(st, en):
+def dijk(st, en):
     dist = {v: INF for v in range(1, V+1)}
     dist[st] = 0
     heap = [(0, st)]
@@ -38,8 +38,9 @@ for _ in range(E):
 
 m1, m2 = map(int, input().split())
 
-a = solve(1, m1) + solve(m1, m2) + solve(m2, V)
-b = solve(1, m2) + solve(m2, m1) + solve(m1, V)
+mid = dijk(m1, m2)
+a = dijk(1, m1) + mid + dijk(m2, V)
+b = dijk(1, m2) + mid + dijk(m1, V)
 
 rst = min(a, b)
 
