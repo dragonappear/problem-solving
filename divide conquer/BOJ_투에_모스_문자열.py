@@ -11,7 +11,6 @@ def solve(n):
     while (i << 1) < n:
         i <<= 1
 
-    print(n, i, n-i)
     return (solve(n-i)+1) % 2
 
 
