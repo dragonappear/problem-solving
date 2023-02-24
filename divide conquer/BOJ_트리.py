@@ -4,19 +4,19 @@ input = stdin.readline
 setrecursionlimit(10**9)
 
 
-def solve(pl, pr):
+def solve(il, ir, pl, pr):
 
-    if pl > pr:
+    if il > ir or pl > pr:
         return
 
     p = pre_order[pl]
 
     # 왼쪽
 
-    solve(pl+1, pl + (idx[p]-il))
+    solve(il, idx[p]-1, pl+1, pl + (idx[p]-il))
 
     # 오른쪽
-    solve(pl+(idx[p]-il)+1, pr)
+    solve(idx[p]+1, ir, pl+(idx[p]-il)+1, pr)
 
     print(p, end=' ')
 
@@ -29,5 +29,5 @@ for _ in range(int(input())):
     for i in range(N):
         idx[in_order[i]] = i
 
-    solve(0, N-1)
+    solve(0, N-1, 0, N-1)
     print()
