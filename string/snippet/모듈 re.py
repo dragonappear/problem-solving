@@ -10,7 +10,7 @@ print(n)  # None
 
 
 # search
-# 정규표현식에 일치하는 매치 객체로 반환
+# 문자열 전체에서 정규표현식에 일치하는 문자열을 찾아서 매치 객체로 반환
 m = p.search('python')
 n = p.search('3 3 python')
 print(m)  # <re.Match object; span=(0, 6), match='python'>
@@ -28,7 +28,7 @@ print(m)  # ['life', 'is', 'too', 'short']
 m = p.finditer('life is too short')
 print(m)  # <callable_iterator object at 0x100e1fe20>
 for a in m:
-    print(a)  # <re.Match object; span=(0, 4), match='life'>
+    print(a)  # <re.Match object; span=(0, 4), match='life'> 등등
 
 
 """
