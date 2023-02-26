@@ -14,5 +14,4 @@ def solve(n):
     return (solve(n-i)+1) % 2
 
 
-N = int(input())
-print(solve(N))
+print(solve(int(input())))
