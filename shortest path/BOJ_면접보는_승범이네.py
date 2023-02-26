@@ -6,44 +6,50 @@ input = stdin.readline
 INF = float('inf')
 
 
-def dijkstra():
-    while heap:
-        w, u = heappop(heap)
+def dijk():
+    global mx, idx
+    dist = [INF] * (N+1)
+    heap = []
 
-        if dist[u] != w:  # 이미 방문
+    for c in city:
+        heap.append((0, c))
+        dist[c] = 0
+
+    while heap:
+        d, u = heappop(heap)
+
+        if dist[u] < d:
             continue
 
-        for v, d in graph[u]:
-            if w+d >= dist[v]:
+        for v, w in graph[u]:
+            if dist[v] < d+w:
                 continue
-            dist[v] = w+d
-            heappush(heap, (w+d, v))
+
+            dist[v] = d+w
+            heappush(heap, (d+w, v))
+
+    for i in range(1, N+1):
+        if i in city:
+            continue
+
+        if mx < dist[i]:
+            mx = dist[i]
+            idx = i
 
 
-mx = idx = -1
 N, M, K = map(int, input().split())
+
 graph = defaultdict(list)
 
 for _ in range(M):
     u, v, w = map(int, input().split())
     graph[v].append((u, w))
 
-dist = {v: INF for v in range(1, N+1)}
-heap = []
-go = set(list(map(int, input().split())))
-for dest in go:
-    dist[dest] = 0
-    heap.append((0, dest))
+city = set(list(map(int, input().split())))
+mx = float('-inf')
+idx = -1
 
-dijkstra()
-
-mx = idx = -1
-for i in range(1, N+1):
-    if i in go:
-        continue
-    if dist[i] > mx:
-        mx = dist[i]
-        idx = i
+dijk()
 
 print(idx)
 print(mx)

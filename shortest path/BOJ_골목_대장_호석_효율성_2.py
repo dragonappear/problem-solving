@@ -6,47 +6,51 @@ input = stdin.readline
 INF = float('inf')
 
 
-def dijkstra(limit):
+def dijk(limit):
     dist = [INF] * (N + 1)
     dist[A] = 0
     heap = [(0, A)]
-    while heap:
-        c, u = heappop(heap)
 
-        if dist[u] < c:
+    while heap:
+        d, u = heappop(heap)
+
+        if dist[u] < d:
             continue
 
         for v, w in graph[u]:
-            t = c+w
-            if w > limit or t > C:
+            if dist[v] <= d+w or w > limit or d+w > C:
                 continue
 
-            if dist[v] > t:
-                dist[v] = t
-                heappush(heap, (t, v))
+            dist[v] = d+w
 
-    return dist[B] <= C
+            if v == B and dist[v] <= C:
+                return True
+
+            heappush(heap, (d+w, v))
+
+    return False
 
 
 N, M, A, B, C = map(int, input().split())
 graph = defaultdict(list)
-costs = set()
-for i in range(M):
-    a, b, c = map(int, input().split())
-    graph[a].append((b, c))
-    graph[b].append((a, c))
-    costs.add(c)
+cost = set()
+for _ in range(M):
+    u, v, w = map(int, input().split())
+    graph[u].append((v, w))
+    graph[v].append((u, w))
+    cost.add(w)
 
-costs = sorted(costs)
-left, right = 0, len(costs)-1
+cost = sorted(cost)
+
+lt, rt = 0, len(cost)-1
 ans = -1
-while left <= right:
-    mid = (left + right) // 2
+while lt <= rt:
+    mid = (lt+rt)//2
 
-    if dijkstra(costs[mid]):
-        right = mid-1
-        ans = costs[mid]
+    if dijk(cost[mid]):
+        rt = mid-1
+        ans = cost[mid]
     else:
-        left = mid + 1
+        lt = mid+1
 
 print(ans)

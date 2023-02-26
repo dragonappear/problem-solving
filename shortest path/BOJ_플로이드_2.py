@@ -1,37 +1,37 @@
 # https://www.acmicpc.net/problem/11780
 from sys import stdin
 input = stdin.readline
+INF = float('inf')
 
-MAX = float('inf')
-V = int(input())
-E = int(input())
-d = [[MAX] * (V+1) for _ in range(V+1)]
-nxt = [[0] * (V+1) for _ in range(V+1)]
+N = int(input())
+d = [[INF] * (N+1) for _ in range(N+1)]
+nxt = [[-1] * (N+1) for _ in range(N+1)]
 
-for _ in range(E):
-    a, b, c = map(int, input().split())
-    d[a][b] = min(d[a][b], c)
-    nxt[a][b] = b
+for _ in range(int(input())):
+    u, v, w = map(int, input().split())
+    if d[u][v] > w:
+        d[u][v] = w
+        nxt[u][v] = v
 
-for i in range(1, V+1):
+for i in range(1, N+1):
     d[i][i] = 0
+    nxt[i][i] = i
 
-for k in range(1, V+1):
-    for i in range(1, V+1):
-        for j in range(1, V+1):
+for k in range(1, N+1):
+    for i in range(1, N+1):
+        for j in range(1, N+1):
             if d[i][j] > d[i][k]+d[k][j]:
                 d[i][j] = d[i][k]+d[k][j]
                 nxt[i][j] = nxt[i][k]
 
-
-for i in range(1, V+1):
-    for j in range(1, V+1):
-        print(d[i][j] if d[i][j] != MAX else 0, end=' ')
+for i in range(1, N+1):
+    for j in range(1, N+1):
+        print(d[i][j] if d[i][j] != INF else 0, end=' ')
     print()
 
-for i in range(1, V+1):
-    for j in range(1, V+1):
-        if d[i][j] == 0 or d[i][j] == MAX:
+for i in range(1, N+1):
+    for j in range(1, N+1):
+        if i == j or d[i][j] == INF:
             print(0)
             continue
 

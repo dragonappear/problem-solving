@@ -18,6 +18,7 @@ def dfs1(u):
 
 def dfs2(u):
     global cnt
+
     vis[u] = True
     for v in outs[u]:
         if vis[v]:
@@ -42,7 +43,6 @@ for i in range(N):
     dfs1(i)
     vis = [False]*N
     dfs2(i)
-    print(cnt)
     if cnt == N-1:
         ans += 1
 
