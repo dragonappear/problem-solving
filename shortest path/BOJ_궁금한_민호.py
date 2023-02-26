@@ -4,34 +4,30 @@ input = stdin.readline
 INF = float('inf')
 
 N = int(input())
-
 d = [list(map(int, input().split())) for _ in range(N)]
-u = [[0] * N for _ in range(N)]
-
-for i in range(N):
-    for j in range(N):
-        isUnit = True
-        for k in range(N):
-            if k in [i, j]:
-                continue
-            tmp = d[i][k]+d[k][j]
-
-            if tmp < d[i][j]:
-                print(-1)
-                exit()
-            elif tmp == d[i][j]:
-                isUnit = False
-
-        if isUnit:
-            u[i][j] = u[j][i] = 1
 
 ans = 0
 for i in range(N):
     for j in range(i+1, N):
-        if u[i][j]:
+        escape = False
+        for k in range(N):
+            if k == i or k == j:
+                continue
+
+            tmp = d[i][k]+d[k][j]
+
+            if d[i][j] == tmp:
+                escape = True
+                break
+            elif d[i][j] > tmp:
+                print(-1)
+                exit()
+
+        if not escape:
             ans += d[i][j]
 
 print(ans)
+
 
 """
 i에서 j를 제외한 다른 정점을 k라고 두고,
