@@ -11,9 +11,6 @@ for i in range(1, N+1):
         psum[i][j] = (psum[i-1][j] + psum[i][j-1] -
                       psum[i-1][j-1]) + arr[i-1][j-1]
 
-for i in psum:
-    print(i)
-
 for _ in range(int(input())):
     sr, sc, er, ec = map(int, input().split())
 
