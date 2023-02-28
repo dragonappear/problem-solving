@@ -10,10 +10,6 @@ for i in range(1, N+1):
         arr[i][j] = tmp[j-1]
         arr[i][j] += arr[i-1][j]
 
-for i in arr:
-    print(i)
-
-
 ans = float('-inf')
 for i in range(1, N+1):
     for j in range(i, N+1):

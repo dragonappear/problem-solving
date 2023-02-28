@@ -6,6 +6,7 @@ input = stdin.readline
 N, M = map(int, input().split())
 arr = list(map(int, input().split()))
 dic = defaultdict(int)
+
 for i in range(1, N):
     arr[i] += arr[i-1]
 
@@ -22,20 +23,6 @@ for n in arr:
 
 print(ans)
 
-# mod = [0] * 1000
-
-# mod[0] = 1
-# sum = 0  # 누적합
-# for n in arr:
-#     n %= M
-#     sum = (sum+n) % M
-#     mod[sum] += 1
-
-# ans = 0
-# for i in range(M):
-#     ans += (mod[i]*(mod[i]-1)//2)
-
-# print(ans)
 
 """
 수열을 S 누적합의 배열을 PrefixSum이라 한다면 S[i+1]번째부터 S[j]까지의 구간합은 PrefixSum[j] - PrefixSum[i]이다.
