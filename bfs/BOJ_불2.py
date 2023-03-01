@@ -1,54 +1,64 @@
 # https://www.acmicpc.net/problem/5427
-from sys import stdin,stdout
+from sys import stdin
 from collections import deque
-input,write=stdin.readline,stdout.write
+input = stdin.readline
 
-def OOB(r,c): return True if not(0<=r<H) or not(0<=c<W) else False
+
+def bfs():
+    q = deque()
+    for r, c in fire:
+        dist1[r][c] = 0
+        q.append((r, c))
+
+    while q:
+        r, c = q.popleft()
+
+        for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+            nr, nc = r+dr, c+dc
+
+            if not(0 <= nr < R) or not(0 <= nc < C) or board[nr][nc] == '#' or dist1[nr][nc] > -1:
+                continue
+
+            dist1[nr][nc] = dist1[r][c]+1
+            q.append((nr, nc))
+
+
+def solve():
+    q = deque([(jr, jc)])
+    dist2[jr][jc] = 0
+
+    while q:
+        r, c = q.popleft()
+
+        for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+            nr, nc = r+dr, c+dc
+
+            if not(0 <= nr < R) or not(0 <= nc < C):
+                return dist2[r][c]+1
+
+            if board[nr][nc] != '.' or (dist1[nr][nc] > -1 and dist1[nr][nc] <= dist2[r][c]+1) or dist2[nr][nc] > -1:
+                continue
+
+            dist2[nr][nc] = dist2[r][c]+1
+            q.append((nr, nc))
+
+    return "IMPOSSIBLE"
+
 
 for _ in range(int(input())):
-    W,H=map(int,input().split())
-    graph=[list(input().strip()) for _ in range(H)]
-    dr_dc=[(0,1),(0,-1),(1,0),(-1,0)]
-    dist_f,dist_s=[[-1]*W for _ in range(H)],[[-1]*W for _ in range(H)]
-    q1,q2=deque(),deque()
+    C, R = map(int, input().split())
+    board = [list(input().strip()) for _ in range(R)]
+    dist1 = [[-1] * C for _ in range(R)]
+    dist2 = [[-1] * C for _ in range(R)]
 
-    # 시작 큐 저장
-    for r in range(H):
-        for c in range(W):
-            if graph[r][c]=='*':
-                q1.append((r,c))
-                dist_f[r][c]=0
-            elif graph[r][c]=='@':
-                q2.append((r,c))
-                dist_s[r][c]=0
-                
-            if graph[r][c]=='#':
-                dist_f[r][c]=dist_s[r][c]=0
-                        
-    # 불 BFS
-    while q1:
-        r,c=q1.popleft()
-        for dr,dc in dr_dc:
-            nr,nc=r+dr,c+dc
-            if OOB(nr,nc) or dist_f[nr][nc]>=0: continue # 이미 방문한 경우(벽 처리 포함)
-            dist_f[nr][nc]=dist_f[r][c]+1
-            q1.append((nr,nc))
+    fire = []
+    jr, jc = 0, 0
+    for i in range(R):
+        for j in range(C):
+            if board[i][j] == '*':
+                fire.append((i, j))
+            elif board[i][j] == '@':
+                jr, jc = i, j
 
-    # 상근 BFS
-    escape=False
-    while q2 and not escape:
-        r,c=q2.popleft()
-        for dr,dc in dr_dc:
-            nr,nc=r+dr,c+dc
-        
-            if OOB(nr,nc): # 탈출 성공한 경우
-                write(str(dist_s[r][c]+1)+"\n")
-                escape=True
-                break
-        
-            if dist_s[nr][nc]>=0: continue # 이미 방문한 경우(벽 처리 포함)
-            if dist_f[nr][nc]>=0 and dist_f[nr][nc]<=dist_s[r][c]+1: continue # 불이 먼저 도착해서 도착할 수 없는 경우
-            dist_s[nr][nc]=dist_s[r][c]+1
-            q2.append((nr,nc))
-
-    if not escape: write("IMPOSSIBLE\n")
+    bfs()
+    print(solve())
