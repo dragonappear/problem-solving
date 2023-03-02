@@ -5,7 +5,7 @@ input = stdin.readline
 
 N = int(input())
 arr = list(map(int, input().split()))
-d = [arr[0]]
+d = [arr[0]]  # d[i]: 길이가 i인 최장부분수열의 값
 
 for i in range(1, N):
     n = arr[i]
