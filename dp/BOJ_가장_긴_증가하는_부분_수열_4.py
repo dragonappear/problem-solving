@@ -1,22 +1,25 @@
 # https://www.acmicpc.net/problem/14002
-from sys import stdin,stdout
-input,write=stdin.readline,stdout.write
+from sys import stdin
+from bisect import bisect_left
+input = stdin.readline
 
-n = int(input())
-data = list(map(int, input().split()))
-dp = [1] * (n)
-
-for i in range(1,len(data)):
+N = int(input())
+arr = [0]+list(map(int, input().split()))
+d = [0]*(N+1)
+for i in range(1, N+1):
     for j in range(i):
-        if data[j] < data[i]:
-            dp[i] = max(dp[i], dp[j]+1)
+        if arr[i] > arr[j] and d[i] < d[j]+1:
+            d[i] = d[j]+1
 
-mx=max(dp)
+mx = max(d)
 print(mx)
-result = []
-for i in range(n-1, -1, -1):
-    if dp[i] == mx:
-        result.append(data[i])
+ret = []
+for i in range(N, 0, -1):
+    if d[i] == mx:
+        ret.append(arr[i])
         mx -= 1
 
-print(*reversed(result))
+    if mx == 0:
+        break
+
+print(*reversed(ret))
