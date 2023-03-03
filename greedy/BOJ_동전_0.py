@@ -1,20 +1,20 @@
 # https://www.acmicpc.net/problem/11047
-from sys import stdin,stdout
-input,write=stdin.readline,stdout.write
+from sys import stdin
+input = stdin.readline
 
-N,K=map(int,input().split())
-COIN=[int(input()) for _ in range(N)]
-COIN.reverse()
-cnt=0
-i=-1
-while K>0 and i<N:
-    i+=1
-    
-    if K<COIN[i]: continue
-    
-    n=K//COIN[i]
-    K=K%COIN[i]
-    
-    cnt+=n
+N, K = map(int, input().split())
+arr = [int(input()) for _ in range(N)]
 
-print(cnt)
+ans = 0
+idx = N-1
+while K:
+
+    if arr[idx] > K:
+        idx -= 1
+        continue
+    else:
+        a = (K//arr[idx])
+        K -= a*arr[idx]
+        ans += a
+
+print(ans)
