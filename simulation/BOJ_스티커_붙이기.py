@@ -1,67 +1,69 @@
-# https://www.acmicpc.net/problem/11725
-from sys import stdin, stdout
-input, write = stdin.readline, stdout.write
+# https://www.acmicpc.net/problem/18808
+from sys import stdin
+input = stdin.readline
 
 
-def rotate(R, C):
+def possible(i, j, idx):
+    arr, n, m = stickers[idx]
 
-    tmp = [[0]*C for _ in range(R)]
+    if i+n > N or j+m > M:
+        return False
 
-    for r in range(R):
-        for c in range(C):
-            tmp[r][c] = sticker[r][c]
-
-    # 회전
-    for r in range(C):
-        for c in range(R):
-            sticker[r][c] = tmp[R-c-1][r]
-
-    return C, R
-
-
-def possible(r, c):
-    for i in range(R):
-        for j in range(C):
-            if board[i+r][j+c] == 1 and sticker[i][j] == 1:
+    for r in range(n):
+        for c in range(m):
+            x = (i+r)
+            y = (j+c)
+            if board[x][y] and arr[r][c]:
                 return False
 
-    for i in range(R):
-        for j in range(C):
-            if sticker[i][j] == 1:
-                board[i+r][j+c] = 1
+    for r in range(n):
+        for c in range(m):
+            if arr[r][c]:
+                x = (i+r)
+                y = (j+c)
+                board[x][y] = arr[r][c]
 
     return True
 
 
+def rotate(idx):
+    arr, n, m = stickers[idx]
+    tmp = [[0] * 12 for _ in range(12)]
+
+    for i in range(m):
+        for j in range(n):
+            tmp[i][j] = arr[n-1-j][i]
+
+    stickers[idx] = [tmp, m, n]
+
+
 N, M, K = map(int, input().split())
 board = [[0]*M for _ in range(N)]
+stickers = []
 
 for _ in range(K):
-    R, C = map(int, input().split())
-
-    # 회전위해 넉넉히
-    sticker = [[0]*12 for _ in range(12)]
-
-    # 입력
-    for i in range(R):
+    r, c = map(int, input().split())
+    tmp = [[0] * 12 for _ in range(12)]
+    for i in range(r):
         arr = list(map(int, input().split()))
-        for j in range(C):
-            sticker[i][j] = arr[j]
+        for j in range(c):
+            tmp[i][j] = arr[j]
+    stickers.append([tmp, r, c])
 
+
+for k in range(K):
     for _ in range(4):
-        attached = False
-        for r in range(N-R+1):
-            if attached:
-                break
-
-            for c in range(M-C+1):
-                if possible(r, c):
-                    attached = True
+        escape = False
+        for i in range(N):
+            for j in range(M):
+                if possible(i, j, k):
+                    escape = True
                     break
-
-        if attached:
+            if escape:
+                break
+        if escape:
             break
 
-        R, C = rotate(R, C)
+        rotate(k)
 
-print(int(sum(1 for i in range(N) for j in range(M) if board[i][j] == 1)))
+print(int(sum(1 for i in range(N) for j in range(M) if board[i][j])))
