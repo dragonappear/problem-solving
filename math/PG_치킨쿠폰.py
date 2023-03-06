@@ -8,6 +8,7 @@ def solution(chicken):
         d, m = divmod(chicken, 10)
         ans += d
         solution(d+m)
+
     return ans
 
 
