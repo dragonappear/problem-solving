@@ -1,18 +1,14 @@
 # https://www.acmicpc.net/problem/11055
-from sys import stdin,stdout
-input,write=stdin.readline,stdout.write
+from sys import stdin
+input = stdin.readline
 
-N=int(input())
-A=list(map(int,input().strip().split()))
-d=[0]*(N)
-d[0]=A[0]
+N = int(input())
+arr = list(map(int, input().split()))
+d = arr[::]  # 초기값 세팅 제대로
 
-for i in range(1,N):
-    mx=-1
+for i in range(1, N):
     for j in range(i):
-        if A[j]<A[i]:
-            mx = max(mx,d[j])
-    if mx!=-1: d[i]=mx+A[i]
-    else: d[i]=A[i]
+        if arr[i] > arr[j]:
+            d[i] = max(d[i], d[j]+arr[i])
 
 print(max(d))
