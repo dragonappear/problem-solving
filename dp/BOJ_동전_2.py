@@ -12,5 +12,4 @@ for i in range(N):
     for j in range(arr[i], K+1):
         d[j] = min(d[j], d[j-arr[i]]+1)
 
-print(d)
 print(d[K] if d[K] != float('inf') else -1)
