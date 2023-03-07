@@ -1,15 +1,17 @@
 # https://www.acmicpc.net/problem/9084
-from sys import stdin,stdout
-input,write=stdin.readline,stdout.write
+from sys import stdin
+input = stdin.readline
 
 for _ in range(int(input())):
-    N=int(input().strip())
-    A= list(map(int,input().strip().split()))
-    M=int(input().strip())
-    
-    d=[0]*(10_010)
-    d[0]=1
+    N = int(input())
+    arr = list(map(int, input().split()))
+    M = int(input())
+
+    d = [0] * 10001
+    d[0] = 1
+
     for i in range(N):
-        for j in range(A[i],M+1):
-            d[j]+=d[j-A[i]]
+        for j in range(arr[i], M+1):
+            d[j] += d[j-arr[i]]
+
     print(d[M])
