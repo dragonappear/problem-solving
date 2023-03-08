@@ -3,7 +3,6 @@ from sys import stdin, stdout
 input, write = stdin.readline, stdout.write
 
 # 담지않을것인가,담을것인가 선택을 해야한다.
-
 N, K = map(int, input().split())
 W, V = [0]*(N+2), [0]*(N+2)
 for i in range(1, N+1):
@@ -14,7 +13,7 @@ for i in range(1, N+1):
 # 무게 i의 최대 가치합
 d = [0]*(K+10)
 for i in range(1, N+1):
-    for j in range(1, K+1):  # 각각의 무게에 대해서 물건을 포함하여 계산
+    for j in range(K, 0, -1):  # 각각의 무게에 대해서 물건을 포함하여 계산
         if j-W[i] >= 0:  # 무게 j 이하인 물건인지 체크
             d[j] = max(d[j], d[j-W[i]] + V[i])  # 최대 체크
 print(d[K])
