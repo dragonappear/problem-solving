@@ -1,20 +1,21 @@
 # https://www.acmicpc.net/problem/1806
-from sys import stdin,stdout
-input,write=stdin.readline,stdout.write
+from sys import stdin
+input = stdin.readline
 
-N,S=map(int,input().strip().split())
-A=list(map(int,input().strip().split()))
+N, S = map(int, input().split())
+arr = list(map(int, input().split()))
 
-rt=0
-total=A[0]
-mn=float('inf')
-for lt in range(N):
-    while rt<N and total<S:
-        rt+=1
-        if rt!=N: total+=A[rt]
-    
-    if rt==N: break
-    mn=min(mn,rt-lt+1) 
-    total-=A[lt]
-    
-print(mn if mn!=float('inf') else 0)
+ans = float('inf')
+sm = rt = 0
+for lt in range(N-1):
+    while rt < N and sm+arr[rt] < S:
+        sm += arr[rt]
+        rt += 1
+
+    if rt == N:
+        break
+
+    ans = min(ans, rt-lt+1)
+    sm -= arr[lt]
+
+print(ans if ans != float('inf') else 0)
