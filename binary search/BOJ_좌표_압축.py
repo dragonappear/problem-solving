@@ -3,9 +3,14 @@ from sys import stdin
 from bisect import bisect_left
 input = stdin.readline
 
+
+def compress():
+    tmp = sorted(set(arr))
+    for i in range(N):
+        arr[i] = bisect_left(tmp, arr[i])
+
+
 N = int(input())
 arr = list(map(int, input().split()))
-tmp = sorted(set(arr))
-for a in arr:
-    idx = bisect_left(tmp, a)
-    print(idx, end=' ')
+compress()
+print(*arr)
