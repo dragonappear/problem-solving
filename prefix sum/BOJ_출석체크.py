@@ -6,7 +6,7 @@ N, K, Q, M = map(int, input().split())
 sleep = set(map(int, input().split()))
 query = list(map(int, input().split()))
 
-vis = [0] * (N+3)
+vis = [False] * (N+3)
 for q in query:
     if q in sleep:
         continue
@@ -14,12 +14,12 @@ for q in query:
     for s in range(q, N+3, q):
         if s in sleep:
             continue
-        vis[s] = 1
+        vis[s] = True
 
 psum = [0] * (N+3)
 for i in range(3, N+3):
     psum[i] = psum[i-1]
-    if vis[i] == 0:
+    if not vis[i]:
         psum[i] += 1
 
 for _ in range(M):
