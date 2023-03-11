@@ -2,28 +2,24 @@
 from sys import stdin
 input = stdin.readline
 
-
-N, K, Q, M = map(int, input().split())  # 학생 수 ,조는 수, 출석 코드 수, 구간 수
+N, K, Q, M = map(int, input().split())
 sleep = set(map(int, input().split()))
-given = list(map(int, input().split()))
+query = list(map(int, input().split()))
 
-d = [0] * (5050)
-
-for q in given:
+vis = [0] * (N+3)
+for q in query:
     if q in sleep:
         continue
 
-    st = q
-    while st <= N+2:
-        if st not in sleep:
-            d[st] = 1
-        st += q
+    for s in range(q, N+3, q):
+        if s in sleep:
+            continue
+        vis[s] = 1
 
-psum = [0] * (5050)
-
+psum = [0] * (N+3)
 for i in range(3, N+3):
     psum[i] = psum[i-1]
-    if d[i] == 0:
+    if vis[i] == 0:
         psum[i] += 1
 
 for _ in range(M):
