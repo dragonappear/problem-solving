@@ -5,7 +5,6 @@ input = stdin.readline
 
 
 def bfs():
-
     dist[1] = 0
     q = deque([1])
     while q:
